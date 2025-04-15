@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+h1, h3 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    color: #97654e;
+}
+
+h3 {
+    color: #97654e9a;
+}
+
+.form-controller {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #d38966;
+    box-shadow: 0 8px 20px rgb(255, 255, 255);
+    width: 320px;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: #97654e;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 1rem 0.75rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #d38966;
+    border-radius: 30px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #a5745d;
+}
+
+button[type="submit"] {
+    width: 80%;
+    padding: 1rem 2rem;
+    background-color: #a37b68;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #ca8666;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.678);
+}
