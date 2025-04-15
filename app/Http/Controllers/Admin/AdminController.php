@@ -19,11 +19,11 @@ class AdminController extends Controller
         if(Auth::attempt($request->only(['name','password'])))
         {
             $request->session()->regenerate();
-            return redirect()->route('main')->with('success','Login Successfully');
+            return redirect()->route('Dashboard')->with('success','Login Successfully');
         }
         else
         {
-            return redirect()->route('login')->with('error','Admin not found');
+            return redirect()->route('Dashboard')->with('error','Admin not found');
         }
     }
 

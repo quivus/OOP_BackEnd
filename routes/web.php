@@ -8,7 +8,7 @@ use App\Http\Middleware\PreventBackHistory;
 
 
 Route::get('/', function () {
-    if(Auth::guard('web')->check()){return redirect()->route('main');}
+    if(Auth::guard('web')->check()){return redirect()->route('Dashboard');}
     else{return view('Application.Auth.Login');}
 })->name('login')->middleware(PreventBackHistory::class);
 
@@ -21,8 +21,8 @@ Route::get('/addProduct', function (){
 
 Route::middleware(['auth:web'])->group( function() {
     Route::get('/main', function() {
-        return view('Application.Layouts.MainPage');
-    })->name('main')->middleware(PreventBackHistory::class);
+        return view('Application.Layouts.Dashboard');
+    })->name('Dashboard')->middleware(PreventBackHistory::class);
 });
 
 
