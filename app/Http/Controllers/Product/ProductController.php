@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Products;
 use App\Models\ArchiveProducts;
 use App\Application\Product\RegisterProduct;
+use App\Domain\Product\Product;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -28,49 +29,26 @@ class ProductController extends Controller
         ]);
     }
 
-    public function CreateProduct(Request $request)
+
+    public function addProduct(Request $request, Products $products)
     {
-        $ValidateFields = array_map('trim', $request->all());
 
-        // Validate the request data
-        $validator = Validator::make($ValidateFields, [
-            'Itemcode' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
             'Item_Name' => 'required|string|max:255',
-            'Description' => 'required|string|max:255',
             'Unit_Price' => 'required|numeric',
+            'Sizes' => 'array',
+            'Setting' => 'required|string',
             'Quantity' => 'required|integer',
+            'Description' => 'required|string|max:255',
+            'Image' => 'image|nullable',
         ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 422,
-                'message' => 'Validation Error',
-                'errors' => $validator->errors()
-            ], 422);
+    
+        if($validator->fails()) {
+            return redirect()->route('addProduct')->with('error', 'Validation Error');
         }
 
-        Validator::make($request->all(), [
-            'Itemcode' => 'required|string|max:255',
-            'Item_Name' => 'required|string|max:255',
-            'Description' => 'required|string|max:255',
-            'Unit_Price' => 'required|numeric',
-            'Quantity' => 'required|integer',
-            'Image' => 'required|image', // image validation
-        ]);
-
-        // Check if the product already exists
-        if(Products::where('Itemcode', $request->Itemcode)->exists()) {
-            // return redirect()->back()->with('error', 'Product Already Exists');
-            return response()->json([
-                'status' => 409,
-                'message' => 'Product Already Exists'
-            ], 409);
-        }
-
-        // Check if the request has a file
         $data = [];
 
-        // Validate the request data
         if($request->hasFile('Image')) {
             $file = $request->file('Image');
             $filename = time() . '.' . $file->getClientOriginalExtension();
@@ -78,27 +56,102 @@ class ProductController extends Controller
             $data['Image'] = $filename;
         }
 
-        $Itemcode = $this->GetTheGenerateProductId();
- 
-        // Create a new product instance
-        $product = $this->registerProduct->CreateProduct(
-            $request->Itemcode,
-            $request->Item_Name,
-            $request->Description,
-            $request->Unit_Price,
-            $request->Quantity,
-            $request->Image,
-        );
+        
 
-        // Save the product to the database
+
+        $product = $products->create([
+            'Item_Name' => $request->Item_Name,
+            'Unit_Price' => $request->Unit_Price,
+            'Sizes' => $request->Sizes,
+            'Setting' => $request->Setting,
+            'Quantity' => $request->Quantity,
+            'Description' => $request->Description,
+            'Image' => $data['Image'],
+        ]);
+        
+
         return Response()->json([
-            'status' => 200,
-            'message' => 'Product Created Successfully',
+            'status' => true,
+            'message' => 'success',
             'data' => $product
         ]);
 
-        // return redirect()->back()->with('success', 'Product Created Successfully');
+
+        // return redirect()->route('addProduct')->with('success', 'Product Created Successfully');
     }
+
+
+
+    // public function CreateProduct(Request $request)
+    // {
+    //     $ValidateFields = array_map('trim', $request->all());
+
+    //     // Validate the request data
+    //     $validator = Validator::make($ValidateFields, [
+    //         'Item_Name' => 'required|string|max:255',
+    //         'Unit_Price' => 'required|numeric',
+    //         'Quantity' => 'required|integer',
+    //         'Description' => 'required|string|max:255',
+    //         'Image' => 'required|image|nullable', // image validation
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'status' => 422,
+    //             'message' => 'Validation Error',
+    //             'errors' => $validator->errors()
+    //         ], 422);
+    //     }
+
+    //     Validator::make($request->all(), [
+    //         'Item_Name' => 'required|string|max:255',
+    //         'Unit_Price' => 'required|numeric',
+    //         'Quantity' => 'required|integer',
+    //         'Description' => 'required|string|max:255',
+    //         'Image' => 'required|image|nullable', // image validation
+    //     ]);
+
+    //     // Check if the product already exists
+    //     if(Products::where('Itemcode', $request->Itemcode)->exists()) {
+    //         // return redirect()->back()->with('error', 'Product Already Exists');
+    //         return response()->json([
+    //             'status' => 409,
+    //             'message' => 'Product Already Exists'
+    //         ], 409);
+    //     }
+
+    //     // Check if the request has a file
+    //     $data = [];
+
+    //     // Validate the request data
+    //     if($request->hasFile('Image')) {
+    //         $file = $request->file('Image');
+    //         $filename = time() . '.' . $file->getClientOriginalExtension();
+    //         $file->move(public_path('images'), $filename);
+    //         $data['Image'] = $filename;
+    //     }
+
+    //     $Itemcode = $this->GetTheGenerateProductId();
+ 
+    //     // Create a new product instance
+    //     $product = $this->registerProduct->CreateProduct(
+    //         $Itemcode,
+    //         $request->Item_Name,
+    //         $request->Description,
+    //         $request->Unit_Price,
+    //         $request->Quantity,
+    //         $data['Image']
+    //     );
+
+    //     // Save the product to the database
+    //     return Response()->json([
+    //         'status' => 200,
+    //         'message' => 'Product Created Successfully',
+    //         'data' => $product
+    //     ]);
+
+    //     // return redirect()->back()->with('success', 'Product Created Successfully');
+    // }
 
     public function GetTheGenerateProductId(): string
     {

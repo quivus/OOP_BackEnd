@@ -13,6 +13,12 @@ Route::get('/', function () {
 })->name('login')->middleware(PreventBackHistory::class);
 
 
+
+Route::get('/addProduct', function (){
+    return view('Application.Pages.Product');
+})->name('addProduct');
+
+
 Route::middleware(['auth:web'])->group( function() {
     Route::get('/main', function() {
         return view('Application.Layouts.MainPage');
@@ -24,10 +30,13 @@ Route::middleware(['auth:web'])->group( function() {
 Route::post('/login', [AdminController::class , 'LoginAdmin'])->name('admin.login');
 Route::post('/logout',[AdminController::class , 'LogoutAdmin'])->name('admin.logout');
 
+//Admin Product Controller
+Route::post('/create', [ProductController::class, 'addProduct'])->name('product.create');
 
 
-//Products Controller
-Route::post('/create', [ProductController::class, 'CreateProduct'])->name('product.create');
-Route::get('/products', [ProductController::class, 'GetAllProducts'])->name('product.get');
-Route::put('/EditProduct/{id}', [ProductController::class, 'GetProductById'])->name('product.get.single');
-Route::delete('/DeleteProduct/{id}', [ProductController::class, 'DeleteProduct'])->name('product.delete');
+
+// //Products Controller
+// Route::post('/create', [ProductController::class, 'CreateProduct'])->name('product.create');
+// Route::get('/products', [ProductController::class, 'GetAllProducts'])->name('product.get');
+// Route::put('/EditProduct/{id}', [ProductController::class, 'GetProductById'])->name('product.get.single');
+// Route::delete('/DeleteProduct/{id}', [ProductController::class, 'DeleteProduct'])->name('product.delete');

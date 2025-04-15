@@ -9,10 +9,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('/client', ClientController::class);
-Route::post('/clientLogin', [ClientController::class, 'LoginClient'])->name('client.login');
-Route::post('/clientLogout', [ClientController::class, 'logoutClient'])->name('client.logout');
-
 
 Route::post('/create', [ProductController::class, 'CreateProduct'])->name('product.create');
 Route::get('/products', [ProductController::class, 'GetAllProducts'])->name('product.get');

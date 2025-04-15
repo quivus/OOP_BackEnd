@@ -7,9 +7,9 @@
 </head>
 <body>
 
-    <Header style="display: flex;">
-        @include('Application.Pages.SideBar')
-    </Header>
+    <header>
+        @include('Application.components.SideBar')
+    </header>
     
     <main>
         <div>

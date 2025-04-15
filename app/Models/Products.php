@@ -8,12 +8,17 @@ class Products extends Model
 {
     protected $table = 'products';
     protected $primaryKey = 'Itemcode';
+    protected $casts = [
+        'Sizes' => 'array'
+    ];
     protected $fillable = [
         'Itemcode',
         'Item_Name',
-        'Description',
         'Unit_Price',
+        'Sizes',
+        'Setting',
         'Quantity',
-        'Image'
+        'Description',
+        'Image',
     ];
 }
