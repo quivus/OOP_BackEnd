@@ -15,8 +15,24 @@ Route::get('/', function () {
 
 
 Route::get('/addProduct', function (){
-    return view('Application.Pages.Product');
+    return view('Application.Pages.AddProduct');
 })->name('addProduct');
+
+Route::get('/products', function (){
+    return view('Application.Pages.Products');
+})->name('products');
+
+Route::get('/sales', function (){
+    return view('Application.Pages.Sales');
+})->name('sales');
+
+Route::get('/expenses', function (){
+    return view('Application.Pages.Expenses');
+})->name('expenses');
+
+Route::get('/expenseshistory', function (){
+    return view('Application.Pages.ExpensesHistory');
+})->name('expenseshistory');
 
 
 Route::middleware(['auth:web'])->group( function() {
@@ -26,7 +42,7 @@ Route::middleware(['auth:web'])->group( function() {
 });
 
 
-//Admin Controller 
+//Admin Controller
 Route::post('/login', [AdminController::class , 'LoginAdmin'])->name('admin.login');
 Route::post('/logout',[AdminController::class , 'LogoutAdmin'])->name('admin.logout');
 
