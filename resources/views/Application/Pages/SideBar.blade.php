@@ -4,93 +4,152 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sidebar</title>
+  <link rel="stylesheet" href="/css/style.css">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      transition: all 0.4s ease-in-out;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: white;
+    }
+
+    .Logo {
+      display: flex;
+      justify-content: center;
+      padding: 1rem 0;
+      transition: transform 0.4s ease-in-out;
     }
 
     .sidebar-container {
       position: fixed;
       margin: 2rem;
-      color: #333;
+      color: palevioletred;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      border: 2px solid #9b6969;
+      align-items: center;
       width: 100px;
-      height: auto;
+      height: 90%;
+      background-color: white;
       border-radius: 50px;
-      background-color: #fff;
-      position: fixed;
-      top: 1rem;
       overflow: hidden;
-      box-shadow: 5px 10px 10px 2px rgba(255, 222, 222, 0.89);
-      transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 5px 10px 10px 2px rgba(254, 81, 150, 0.5);
+      transition: width 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+      padding: 1rem 0;
     }
 
     .sidebar-container:hover {
-      width: 200px;
-      box-shadow: 8px 8px 8px 5px rgba(255, 226, 226, 0.88);
+      width: 240px;
+      box-shadow: 8px 8px 15px 5px rgba(247, 112, 98, 0.5);
     }
 
     .sidebar-container ul {
       list-style: none;
-      padding: 1rem;
+      padding: 1rem 0;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 0.7rem;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
     }
 
     .sidebar-container li {
-      padding: 0.80rem 1rem;
+      position: relative;
+      padding: 0.6rem 1rem;
       border-radius: 40px;
-      transition: all 0.8s ease;
+      transition: all 0.4s ease-in-out;
+      width: 100%;
     }
 
     .sidebar-container li:hover {
-      background-color: #97626296;
+      transform: scale(1.05);
       padding-left: 1rem;
-
     }
 
     .sidebar-container li a,
     .sidebar-container li button {
-      color: #333;
+      color: palevioletred;
       text-decoration: none;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 12px;
-      width: auto;
+      gap: 8px;
+      width: 100%;
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      transition: color 0.2s ease;
+      transition: all 0.4s ease-in-out;
     }
 
     .sidebar-container li:hover a,
     .sidebar-container li:hover button {
-      color: white;
+      transform: scale(1.05);
+      color: palevioletred;
     }
 
-    .sidebar-container img{
-        height: 30px;
-        width: 30px;
+    .sidebar-container img {
+      height: 30px;
+      width: 30px;
+      filter: brightness(1.1);
+      transition: transform 0.4s ease-in-out;
     }
+
+    .sidebar-container li:hover img {
+      transform: scale(1.1);
+    }
+
+    .submenu {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.4s ease-in-out;
+      padding-left: 1.2rem;
+      margin-top: 0.2rem;
+    }
+
+    .has-submenu:hover .submenu {
+      max-height: 200px;
+      opacity: 1;
+      border-top: 1px solid palevioletred;
+      border-bottom: 1px solid palevioletred;
+    }
+
+    .submenu span {
+      align-items: center;
+      gap: 8px;
+      color: palevioletred;
+      margin-top: 1.5rem;
+      padding:0;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .submenu a:hover {
+      color: rgb(92, 25, 121);
+      margin-left: 0.5rem;
+    }
+
+    .submenu img {
+      height: 20px;
+      width: 20px;
+    }
+
     .sidebar-container li button[type="submit"] {
-      color: #c74a4a;
       font-weight: 600;
+      background-color: none;
+      border: none;
     }
 
     .nav-text {
+      font-size: 0.8rem;
       display: none;
     }
 
@@ -98,28 +157,38 @@
       display: inline;
     }
 
-    .Cards{
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-        width: 50%;
-        height: 30%;
-        margin-top: 5%;
-        margin-left: 20%;
-
+    .sidebar-container form {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(223, 76, 191, 0);
     }
 
-    .card{
-        margin-top: 2rem;
-        background-color: none ;
-        border: pink 1px solid;
-        text-align: center;
-        border-radius: 10px 60px 30px ;
+    .sidebar-container form button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: palevioletred;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.6rem 1rem;
+      border-radius: 40px;
+      transition: all 0.4s ease-in-out;
     }
+
+    .sidebar-container form button:hover {
+      transform: scale(1.05);
+    }
+
     @media (max-width: 768px) {
       .sidebar-container {
         width: 100%;
-        height: auto;
         flex-direction: row;
         align-items: center;
         margin: 1rem auto;
@@ -129,11 +198,12 @@
       .sidebar-container ul {
         flex-direction: row;
         justify-content: space-around;
-        padding: 1rem;
+        padding: 0.5rem;
+        gap: 0.3rem;
       }
 
       .sidebar-container li {
-        padding: 0.5rem;
+        padding: 0.3rem 0.6rem;
       }
 
       .nav-text {
@@ -143,42 +213,87 @@
       .sidebar-container:hover .nav-text {
         display: inline;
       }
+
+      .submenu {
+        padding-left: 1rem;
+        font-size: 0.7rem;
+        margin-top: 0.1rem;
+      }
+
+      .submenu a {
+        padding: 0.2rem 0;
+      }
+
+      .submenu a:hover {
+        transform: scale(1.05);
+        margin-left: 0.3rem;
+      }
+
+      .sidebar-container form {
+        border-top: none;
+        padding: 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
-
-@section('content')
   <div class="sidebar-container">
-    <ul>
-    <img src="/images/oop_logo.png" alt="" style="height:50px; width:60px;">
-      <li><a href="#">
-        <img src="/images/oop_statistic.jpg" alt="">
-         <span class="nav-text">Sales Summary</span></a></li>
-      <li><a href="{{route('addProduct')}}">
-      <img src="/images/oop_statistic.jpg" alt="">
-      <span class="nav-text">Add Product</span></a></li>
-      <li><a href="#">
-      <img src="/images/oop_statistic.jpg" alt="">
-      <span class="nav-text">Products</span></a></li>
-      <li><a href="#">
-      <img src="/images/oop_statistic.jpg" alt="">
-      <span class="nav-text">Expenses</span></a></li>
-      <li><a href="#">
-      <img src="/images/oop_statistic.jpg" alt="">
-      <span class="nav-text">Expenses History</span></a></li>
-      <li>
-        <form action="{{route('admin.logout')}}" method="post">
-          @csrf
-          <button type="submit">
-            <img src="/images/oop_logout.jpg" alt="">
-          <span class="nav-text">Logout</span></button>
-        </form>
-      </li>
-    </ul>
+    <div class="Logo">
+      <img src="/images/oop_logo.png" alt="Logo" style="height: 50px; width: 50px;">
+    </div>
+
+    <div class="nav-wrapper" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <ul>
+
+        <li>
+            <a href="{{route('Dashboard')}}">
+                <img src="/images/dashboard.png" alt="">
+            <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+
+        <li>
+            <a href="{{route('sales')}}">
+                <img src="/images/sales.png" alt="">
+            <span class="nav-text">Sales</span>
+          </a>
+        </li>
+
+        <li class="has-submenu">
+          <a href="{{route('addProduct')}}">
+            <img src="/images/addedproduct.png" alt="">
+            <span class="nav-text">Add Product</span>
+          </a>
+          <div class="submenu">
+          <a href="{{route('products')}}">
+              <img src="/images/products.png" alt="">
+              <span>Products</span>
+            </a>
+          </div>
+        </li>
+
+        <li class="has-submenu">
+        <a href="{{route('expenses')}}">
+        <img src="/images/expenses.png" alt="">
+            <span class="nav-text">Add Expenses</span>
+          </a>
+          <div class="submenu">
+          <a href="{{route('expenseshistory')}}">
+          <img src="/images/expenseshistory.png" alt="">
+              <span>Expenses History</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <form action="{{route('admin.logout')}}" method="post">
+      @csrf
+      <button type="submit">
+        <img src="/images/exit.png" alt="">
+        <span class="nav-text">Logout</span>
+      </button>
+    </form>
   </div>
-
-  @endsection
-
 </body>
 </html>
