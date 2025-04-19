@@ -14,11 +14,10 @@
         padding: 0;
     }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 2rem;
-      -webkit-font-smoothing: antialiased;
+    body,html {
+        scroll-behavior: smooth;
+        margin: 0;
+        font-family: 'Playfair Display', serif;
     }
 
     h1 {
