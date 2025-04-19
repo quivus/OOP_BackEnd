@@ -7,10 +7,6 @@
 </head>
 
 <style>
-    body{
-        margin: 0;
-        padding: 0;
-    }
 
 </style>
 <body>
@@ -20,9 +16,9 @@
     </section>
 
     <main>
-        @include('Application.Pages.HomePage')
-        @yield('HomePage')
+        @include('Application.Pages.Dashboard')
+        @yield('Dashboard')
     </main>
-   
+
 </body>
 </html>
